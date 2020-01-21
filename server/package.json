@@ -1,0 +1,33 @@
+{
+  "name": "save-book-info-3528-rokmc-unit-server",
+  "version": "1.0.0",
+  "description": "Search book info from the National Library of Korea by ISBN. And save it to google spreadsheet",
+  "main": "dist/server.js",
+  "dependencies": {
+    "@types/koa": "^2.11.0",
+    "@types/koa-router": "^7.4.0",
+    "koa": "^2.11.0",
+    "koa-router": "^7.4.0",
+    "mime": "^2.4.4",
+    "nodemon": "^2.0.2",
+    "typescript": "^3.7.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node .",
+    "build": "tsc",
+    "start-watch": "nodemon .",
+    "build-watch": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bigfoodK/save-book-info-3528-rokmc-unit.git"
+  },
+  "author": "bigfoodK",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bigfoodK/save-book-info-3528-rokmc-unit/issues"
+  },
+  "homepage": "https://github.com/bigfoodK/save-book-info-3528-rokmc-unit#readme"
+}
