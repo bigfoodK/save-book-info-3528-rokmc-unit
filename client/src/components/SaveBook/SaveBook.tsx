@@ -3,19 +3,20 @@ import styled from 'styled-components';
 import RestAPI from '../../restAPI';
 
 const Container = styled.div`
-  width: 100%;
+  display: inline-block;
+  max-width: 80%;
 `;
 
 const ISBNInput = styled.input`
   width: 100%;
   background-color: #CCC;
-  border: solid 0.5em #444;
+  border: solid 0.25em #444;
   font-size: 5vmin;
   text-align: center;
   transition: all .3s;
 
   :focus {
-    border: solid 0.5em #555;
+    border: solid 0.25em #555;
     background-color: #EEE;
   }
 `;
@@ -36,9 +37,10 @@ async function save(isbn: string) {
         break;
       }
     }
-    return;
+    return false;
   }
   alert('Book sucessfully added!');
+  return true;
 }
 
 function isNumberString(string: string) {
@@ -51,7 +53,7 @@ function isNumberString(string: string) {
   return true;
 }
 
-function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
+async function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
   if (event.key !== 'Enter') {
     return;
   }
@@ -64,7 +66,10 @@ function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
     alert('Wrong ISBN');
     return;
   }
-  save(isbn);
+  const isSaved = await save(isbn);
+  if (isSaved) {
+    event.currentTarget.value = '';
+  }
 }
 
 const SaveBook: FC = () => {
