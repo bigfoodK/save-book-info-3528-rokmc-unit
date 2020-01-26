@@ -18,7 +18,7 @@ type SercerConfig = {
 };;
 
 const config: SercerConfig = {
-	publicDirectory: '../client/dist',
+	publicDirectory: '../client/build',
 	http: {
 		port: 8080,
 	},

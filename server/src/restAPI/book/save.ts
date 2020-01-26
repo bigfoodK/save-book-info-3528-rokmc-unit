@@ -12,7 +12,11 @@ export default async function save(ctx: Koa.Context, next: () => Promise<any>) {
 	const request = <SaveRequest> ctx.request.body;
 	const isbn = request.isbn;
 	if (!isbn) {
-		ctx.throw(400, 'isbn not served');
+		ctx.body = JSON.stringify({
+			isSucessful: false,
+			message: 'ISBN not served',
+		});
+		return;
 	}
 
 	const searchResponse = await searchBookByISBN({
@@ -38,7 +42,7 @@ export default async function save(ctx: Koa.Context, next: () => Promise<any>) {
 	if(searchResponseAsResult.docs.length < 1) {
 		ctx.body = JSON.stringify({
 			isSucessful: false,
-			Message: 'No such book exist',
+			message: 'No such book exist',
 		});
 		return;
 	}
@@ -47,12 +51,12 @@ export default async function save(ctx: Koa.Context, next: () => Promise<any>) {
 	if (!isSaveBookToGoogleSpreadsheetSucessful) {
 		ctx.body = JSON.stringify({
 			isSucessful: false,
-			Message: 'Saving book to google spreadsheed failed',
+			message: 'Saving book to google spreadsheed failed',
 		});
 		return;
 	}
 	ctx.body = JSON.stringify({
 		isSucessful: true,
-		Message: 'Saved book to google spreadsheed sucessfully',
+		message: 'Saved book to google spreadsheed sucessfully',
 	});
 }
