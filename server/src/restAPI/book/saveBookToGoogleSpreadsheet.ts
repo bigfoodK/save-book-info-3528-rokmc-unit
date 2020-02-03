@@ -46,7 +46,7 @@ export default async function saveBookToGoogleSpreadsheet(book: SearchBookByISBN
       return resolve(false);
     }
 
-    const newRow: any = {};
+    const newRow: { [key: string]: any } = {};
     newRow['REG_NUM'] = '=TEXT((ROW()-1), "0000000")';
     Object.keys(book).forEach(key => {
       newRow[key] = (book as any)[key];

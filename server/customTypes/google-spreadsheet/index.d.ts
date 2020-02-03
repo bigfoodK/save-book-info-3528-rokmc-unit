@@ -12,7 +12,7 @@ declare module 'google-spreadsheet' {
 		client_x509_cert_url: string;
 	};
 
-	export interface SpreadsheetRow extends Object {
+	export type SpreadsheetRow = { [key: string]: any } & {
 		save(callback?: Function): void;
 		del(callback?: Function): void;
 	}
@@ -43,7 +43,7 @@ declare module 'google-spreadsheet' {
 
 		public getRows(options: SpreadsheetWorksheetGetRowsOptions, callback?: (err: Error, rows: SpreadsheetRow[]) => void): void;
 		public getCells(options: SpreadsheetWorksheetGetCellsOptions, callback?: Function): void;
-		public addRow(newRow: SpreadsheetRow, callback?: Function): void;
+		public addRow(newRow: {[key: string]: any}, callback?: Function): void;
 		public setHeaderRow(values: string[], callback?: Function): void;
 		public resize(options: SpreadsheetWorksheetResizeOptions, callback?: Function): void;
 	}
