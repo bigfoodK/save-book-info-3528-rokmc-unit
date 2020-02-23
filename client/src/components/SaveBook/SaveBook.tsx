@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import RestAPI from '../../restAPI';
 
@@ -53,35 +53,63 @@ function isNumberString(string: string) {
   return true;
 }
 
-async function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
-  if (event.key !== 'Enter') {
-    return;
-  }
-  const isbn = event.currentTarget.value;
-  if (!isbn) {
-    alert('ISBN input is empty');
-    return;
-  }
-  if (!isNumberString(isbn) || isbn.length !== 13) {
-    alert('Wrong ISBN');
-    return;
-  }
-  const isSaved = await save(isbn);
-  if (isSaved) {
-    event.currentTarget.value = '';
-  }
-}
+type SaveBookProp = {
+};
 
-const SaveBook: FC = () => {
-  return (
-    <Container>
-      <ISBNInput
-        placeholder="ISBN13"
-        type="number"
-        onKeyPress={ handleKeyPress }
-      />
-    </Container>
-  );
+type SaveBookState = {
+  isbn: string,
+};
+
+class SaveBook extends Component<SaveBookProp, SaveBookState> {
+  constructor(props: SaveBookProp) {
+    super(props);
+    this.state = {
+      isbn: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
+
+  async handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      isbn: event.target.value,
+    });
+  }
+
+  async handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key !== 'Enter') {
+      return;
+    }
+    const isbn = this.state.isbn;
+    if (!isbn) {
+      alert('ISBN input is empty');
+      return;
+    }
+    if (!isNumberString(isbn) || isbn.length !== 13) {
+      alert('Wrong ISBN');
+      return;
+    }
+    const isSaved = await save(isbn);
+    if (isSaved) {
+      this.setState({
+        isbn: '',
+      });
+    }
+  }
+
+  render() {
+    return  (
+      <Container>
+        <ISBNInput
+          placeholder="ISBN13"
+          type="number"
+          value={ this.state.isbn }
+          onChange={ this.handleChange }
+          onKeyPress={ this.handleKeyPress }
+        />
+      </Container>
+    );
+  }
 }
 
 export default SaveBook;
