@@ -1,8 +1,9 @@
 import Config from '../../serverConfig';
 import GoogleSpreadsheet, { SpreadsheetWorksheet } from 'google-spreadsheet';
 import { SearchBookByISBNJsonResultDocEntry } from './searchBookByISBN';
+import RegistrationNumber from '../../RegistrationNumber';
 
-const sheetHeader = ['REG_NUM', 'EA_ISBN', 'TITLE', 'AUTHOR', 'KDC', 'DDC', 'SUBJECT', 'SERIES_TITLE', 'SERIES_NO', 'PUBLISHER'];
+const sheetHeader = ['REG_NUM', 'COUNT','TITLE', 'AUTHOR', 'PUBLISHER', 'SUBJECT', 'KDC', 'EA_ISBN', 'SERIES_TITLE', 'SERIES_NO'];
 let isAPIReady = false;
 let sheet: SpreadsheetWorksheet | null = null;
 
@@ -45,12 +46,13 @@ export default async function saveBookToGoogleSpreadsheet(book: SearchBookByISBN
     if(!isAPIReady || !sheet) {
       return resolve(false);
     }
-
+    const regNum = await RegistrationNumber.next();
     const newRow: { [key: string]: any } = {};
-    newRow['REG_NUM'] = '=TEXT((ROW()-1), "0000000")';
     Object.keys(book).forEach(key => {
       newRow[key] = (book as any)[key];
     });
+    newRow['REG_NUM'] = regNum;
+    newRow['COUNT'] = '=COUNTIF(OFFSET($H$2, 0, 0, ROW()-1, 1), OFFSET($H$1, ROW()-1, 0, 1, 1))';
     sheet.addRow(newRow, () => {
       resolve(true);
     });

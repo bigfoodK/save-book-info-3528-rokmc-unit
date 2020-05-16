@@ -12,6 +12,7 @@
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
+    "level-ts": "^1.12.2",
     "mime": "^2.4.4",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "set-last": "node dist/script/setLastRegistrationNumber.js",
     "start": "node .",
     "build": "tsc",
     "start-watch": "nodemon .",
