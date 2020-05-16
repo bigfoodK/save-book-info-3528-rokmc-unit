@@ -105,3 +105,6 @@ dist
 
 # Server config
 server/src/serverConfig.ts
+
+# Db
+server/db
